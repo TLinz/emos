@@ -8,6 +8,7 @@ server:
     port: 8080
     servlet:
         context-path: /emos
+
 spring:
     datasource:
         type: com.alibaba.druid.pool.DruidDataSource
@@ -42,3 +43,20 @@ spring:
             authentication-database: admin
             username: admin
             password: admin
+
+mybatis:
+    mapper-locations: classpath*:mapper/*.xml
+    type-aliases-package: com.linzzxz.emos.db.pojo
+    configuration:
+        # 控制台打印sql，不需要注释即可
+        log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+        map-underscore-to-camel-case: true
+
+logging:
+    level:
+        root: info
+        com.linzzxz.emos.db.dao: warn
+    pattern:
+        console: "%d{HH:mm:ss}  %-5level  %msg%n"
+
+
