@@ -9,7 +9,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletRequestWrapper;
 
 import java.io.*;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -31,7 +30,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
     @Override
     public String[] getParameterValues(String name) {
         String[] values = super.getParameterValues(name);
-        doFilter(values);
+        filterVals(values);
         return values;
     }
 
@@ -43,7 +42,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
         if(params != null) {
             for (String key : params.keySet()) {
                 String[] values = params.get(key);
-                doFilter(values);
+                filterVals(values);
                 res.put(key, values);
             }
         }
@@ -111,7 +110,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
         };
     }
 
-    private void doFilter(String[] values) {
+    private void filterVals(String[] values) {
         if(values != null) {
             for(int i = 0; i < values.length; i++) {
                 String value = values[i];
